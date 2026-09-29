@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Inventory | Smart Retail</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+
+        /* =================================================
+           HEADER
+        ================================================= */
+
+        .header {
+
+            background: #1f2937;
+
+            color: white;
+
+            padding: 20px 40px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .logo {
+
+            font-size: 24px;
+
+            font-weight: bold;
+        }
+
+
+        .header-title {
+
+            font-size: 14px;
+
+            opacity: 0.8;
+        }
+
+
+        /* =================================================
+           CONTAINER
+        ================================================= */
+
+        .container {
+
+            width: 94%;
+
+            max-width: 1500px;
+
+            margin: 30px auto;
+        }
+
+
+        /* =================================================
+           PAGE HEADER
+        ================================================= */
+
+        .page-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .page-header h1 {
+
+            font-size: 30px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .page-header p {
+
+            color: #777;
+
+            font-size: 15px;
+        }
+
+
+        .button-group {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        /* =================================================
+           BUTTONS
+        ================================================= */
+
+        .btn {
+
+            display: inline-block;
+
+            padding: 11px 18px;
+
+            border-radius: 6px;
+
+            text-decoration: none;
+
+            border: none;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+
+        .btn-primary {
+
+            background: #2563eb;
+
+            color: white;
+        }
+
+
+        .btn-primary:hover {
+
+            background: #1d4ed8;
+        }
+
+
+        .btn-dashboard {
+
+            background: #374151;
+
+            color: white;
+        }
+
+
+        .btn-dashboard:hover {
+
+            background: #1f2937;
+        }
+
+
+        .btn-view {
+
+            background: #e0ecff;
+
+            color: #1d4ed8;
+
+            padding: 7px 12px;
+        }
+
+
+        .btn-view:hover {
+
+            background: #c7dbff;
+        }
+
+
+        /* =================================================
+           SUMMARY CARDS
+        ================================================= */
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .summary-card {
+
+            background: white;
+
+            padding: 22px;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0,0,0,0.08);
+        }
+
+
+        .summary-card h3 {
+
+            font-size: 14px;
+
+            color: #777;
+
+            font-weight: normal;
+
+            margin-bottom: 10px;
+        }
+
+
+        .summary-card .value {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #1f2937;
+        }
+
+
+        /* =================================================
+           TABLE CARD
+        ================================================= */
+
+        .table-card {
+
+            background: white;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0,0,0,0.08);
+
+            overflow: hidden;
+        }
+
+
+        .table-title {
+
+            padding: 20px;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 18px;
+
+            font-weight: bold;
+        }
+
+
+        .table-wrapper {
+
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 950px;
+        }
+
+
+        th {
+
+            background: #1f2937;
+
+            color: white;
+
+            padding: 14px;
+
+            text-align: left;
+
+            font-size: 13px;
+
+            white-space: nowrap;
+        }
+
+
+        td {
+
+            padding: 14px;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 14px;
+
+            white-space: nowrap;
+        }
+
+
+        tr:hover {
+
+            background: #f9fafb;
+        }
+
+
+        .product-name {
+
+            font-weight: bold;
+
+            color: #1f2937;
+        }
+
+
+        .stock-positive {
+
+            color: #15803d;
+
+            font-weight: bold;
+        }
+
+
+        .stock-low {
+
+            color: #d97706;
+
+            font-weight: bold;
+        }
+
+
+        .stock-negative {
+
+            color: #dc2626;
+
+            font-weight: bold;
+        }
+
+
+        .status {
+
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+
+        .status-good {
+
+            background: #dcfce7;
+
+            color: #15803d;
+        }
+
+
+        .status-low {
+
+            background: #fef3c7;
+
+            color: #b45309;
+        }
+
+
+        .status-out {
+
+            background: #fee2e2;
+
+            color: #dc2626;
+        }
+
+
+        .empty {
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #888;
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 1000px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 768px) {
+
+            .header {
+
+                padding: 15px 20px;
+            }
+
+
+            .header-title {
+
+                display: none;
+            }
+
+
+            .container {
+
+                width: 95%;
+            }
+
+
+            .page-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+
+            .button-group {
+
+                flex-wrap: wrap;
+            }
+
+
+            .summary-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+
+        🏪 SMART RETAIL
+
+    </div>
+
+
+    <div class="header-title">
+
+        Retail Management System
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN CONTAINER
+===================================================== -->
+
+<div class="container">
+
+
+    <!-- =================================================
+         PAGE HEADER
+    ================================================== -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                Inventory Management
+            </h1>
+
+            <p>
+                Track opening, inward, outward and closing stock
+            </p>
+
+        </div>
+
+
+        <div class="button-group">
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="btn btn-dashboard"
+            >
+                ← Dashboard
+            </a>
+
+
+            <a
+                href="{% url 'inventory_add' %}"
+                class="btn btn-primary"
+            >
+                + Add Product
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SUMMARY CARDS
+    ================================================== -->
+
+    <div class="summary-grid">
+
+
+        <!-- TOTAL PRODUCTS -->
+
+        <div class="summary-card">
+
+            <h3>
+                Total Products
+            </h3>
+
+            <div class="value">
+
+                {{ inventories|length }}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- OPENING STOCK -->
+
+        <div class="summary-card">
+
+            <h3>
+                Total Opening Stock
+            </h3>
+
+            <div class="value">
+
+                {{ total_opening_stock }}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- INWARD STOCK -->
+
+        <div class="summary-card">
+
+            <h3>
+                Total Inward Stock
+            </h3>
+
+            <div class="value">
+
+                {{ total_inward_stock }}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- OUTWARD STOCK -->
+
+        <div class="summary-card">
+
+            <h3>
+                Total Outward Stock
+            </h3>
+
+            <div class="value">
+
+                {{ total_outward_stock }}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CLOSING STOCK -->
+
+        <div class="summary-card">
+
+            <h3>
+                Total Closing Stock
+            </h3>
+
+            <div class="value">
+
+                {{ total_closing_stock }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         INVENTORY TABLE
+    ================================================== -->
+
+    <div class="table-card">
+
+
+        <div class="table-title">
+
+            Inventory Stock Report
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Company
+                        </th>
+
+                        <th>
+                            Opening
+                        </th>
+
+                        <th>
+                            Inward
+                        </th>
+
+                        <th>
+                            Outward
+                        </th>
+
+                        <th>
+                            Closing
+                        </th>
+
+                        <th>
+                            Stock Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+
+                <tbody>
+
+
+                    {% for inventory in inventories %}
+
+
+                    <tr>
+
+
+                        <!-- NUMBER -->
+
+                        <td>
+
+                            {{ forloop.counter }}
+
+                        </td>
+
+
+
+                        <!-- PRODUCT -->
+
+                        <td class="product-name">
+
+                            {{ inventory.product_name }}
+
+                        </td>
+
+
+
+                        <!-- COMPANY -->
+
+                        <td>
+
+                            {{ inventory.product_company|default:"-" }}
+
+                        </td>
+
+
+
+                        <!-- OPENING -->
+
+                        <td>
+
+                            {{ inventory.opening_stock }}
+
+                        </td>
+
+
+
+                        <!-- INWARD -->
+
+                        <td>
+
+                            {{ inventory.inward_stock }}
+
+                        </td>
+
+
+
+                        <!-- OUTWARD -->
+
+                        <td>
+
+                            {{ inventory.outward_stock }}
+
+                        </td>
+
+
+
+                        <!-- CLOSING -->
+
+                        <td>
+
+                            {% if inventory.closing_stock < 0 %}
+
+                                <span class="stock-negative">
+
+                                    {{ inventory.closing_stock }}
+
+                                </span>
+
+                            {% elif inventory.closing_stock <= 5 %}
+
+                                <span class="stock-low">
+
+                                    {{ inventory.closing_stock }}
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="stock-positive">
+
+                                    {{ inventory.closing_stock }}
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+
+                        <!-- STOCK STATUS -->
+
+                        <td>
+
+
+                            {% if inventory.closing_stock < 0 %}
+
+                                <span class="status status-out">
+
+                                    Out of Stock
+
+                                </span>
+
+
+                            {% elif inventory.closing_stock == 0 %}
+
+                                <span class="status status-out">
+
+                                    Out of Stock
+
+                                </span>
+
+
+                            {% elif inventory.closing_stock <= 5 %}
+
+                                <span class="status status-low">
+
+                                    Low Stock
+
+                                </span>
+
+
+                            {% else %}
+
+                                <span class="status status-good">
+
+                                    In Stock
+
+                                </span>
+
+                            {% endif %}
+
+
+                        </td>
+
+
+
+                        <!-- ACTION -->
+
+                        <td>
+
+                            <a
+                                href="{% url 'inventory_detail' inventory.id %}"
+                                class="btn btn-view"
+                            >
+
+                                View
+
+                            </a>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% empty %}
+
+
+                    <tr>
+
+                        <td
+                            colspan="9"
+                            class="empty"
+                        >
+
+                            No inventory products found.
+
+                        </td>
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

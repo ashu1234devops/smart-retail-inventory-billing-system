@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Delete Vendor | Smart Retail</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 20px 35px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .header-right {
+            font-size: 14px;
+            color: #d1d5db;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 600px;
+            max-width: 92%;
+            margin: 80px auto;
+        }
+
+        /* ================= CARD ================= */
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 35px;
+
+            box-shadow:
+                0 2px 10px rgba(0, 0, 0, 0.08);
+
+            text-align: center;
+        }
+
+        .icon {
+            width: 65px;
+            height: 65px;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #fee2e2;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+        }
+
+        h1 {
+            margin: 0 0 12px;
+
+            font-size: 26px;
+
+            color: #172033;
+        }
+
+        .message {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .vendor-name {
+            font-weight: bold;
+            color: #dc2626;
+        }
+
+        .warning {
+            background: #fff7ed;
+
+            border: 1px solid #fed7aa;
+
+            color: #9a3412;
+
+            padding: 13px;
+
+            border-radius: 6px;
+
+            margin-bottom: 25px;
+
+            font-size: 14px;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+        }
+
+        .btn {
+
+            padding: 11px 22px;
+
+            border-radius: 6px;
+
+            border: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: inline-block;
+
+        }
+
+        .btn-danger {
+
+            background: #dc2626;
+
+            color: white;
+
+        }
+
+        .btn-danger:hover {
+
+            background: #b91c1c;
+
+        }
+
+        .btn-secondary {
+
+            background: #e5e7eb;
+
+            color: #374151;
+
+        }
+
+        .btn-secondary:hover {
+
+            background: #d1d5db;
+
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 95%;
+            }
+
+            .header {
+                padding: 18px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div class="logo">
+            🏪 SMART RETAIL
+        </div>
+
+        <div class="header-right">
+            Retail Management System
+        </div>
+
+    </div>
+
+
+    <!-- ================= DELETE CONTENT ================= -->
+
+    <div class="container">
+
+        <div class="card">
+
+            <div class="icon">
+                🗑️
+            </div>
+
+
+            <h1>
+                Delete Vendor?
+            </h1>
+
+
+            <div class="message">
+
+                Are you sure you want to delete
+
+                <span class="vendor-name">
+                    "{{ vendor.vendor_name }}"
+                </span>
+
+                ?
+
+                <br>
+
+                This action cannot be undone.
+
+            </div>
+
+
+            <div class="warning">
+
+                ⚠️
+                All information associated with this vendor
+                may be removed permanently.
+
+            </div>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="buttons">
+
+                    <a href="{% url 'vendor_list' %}"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="btn btn-danger">
+
+                        Yes, Delete Vendor
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+</body>
+</html>

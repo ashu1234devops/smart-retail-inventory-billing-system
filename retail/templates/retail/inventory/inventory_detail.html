@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Inventory Details | Smart Retail</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        .back {
+            background: #1f2937;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .company {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .stock-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stock-box {
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stock-label {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .stock-number {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .formula {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 800px) {
+
+            .stock-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .stock-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        🏪 SMART RETAIL
+    </div>
+
+</header>
+
+
+<div class="container">
+
+
+    <div class="top">
+
+        <h1>
+            Inventory Details
+        </h1>
+
+        <a
+            href="{% url 'inventory_list' %}"
+            class="back">
+
+            ← Back
+
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="product-title">
+
+            {{ inventory.product_name }}
+
+        </div>
+
+        <div class="company">
+
+            Company:
+            {{ inventory.product_company|default:"-" }}
+
+        </div>
+
+
+        <div class="stock-grid">
+
+
+            <div class="stock-box">
+
+                <div class="stock-label">
+                    Opening Stock
+                </div>
+
+                <div class="stock-number">
+                    {{ inventory.opening_stock }}
+                </div>
+
+            </div>
+
+
+            <div class="stock-box">
+
+                <div class="stock-label">
+                    Inward Stock
+                </div>
+
+                <div class="stock-number">
+                    {{ inventory.inward_stock }}
+                </div>
+
+            </div>
+
+
+            <div class="stock-box">
+
+                <div class="stock-label">
+                    Outward Stock
+                </div>
+
+                <div class="stock-number">
+                    {{ inventory.outward_stock }}
+                </div>
+
+            </div>
+
+
+            <div class="stock-box">
+
+                <div class="stock-label">
+                    Closing Stock
+                </div>
+
+                <div class="stock-number">
+                    {{ inventory.closing_stock }}
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="formula">
+
+            <strong>
+                Closing Stock Calculation:
+            </strong>
+
+            <br>
+
+            Opening Stock + Inward Stock − Outward Stock
+
+            <br>
+
+            {{ inventory.opening_stock }}
+            +
+            {{ inventory.inward_stock }}
+            −
+            {{ inventory.outward_stock }}
+
+            =
+            <strong>
+                {{ inventory.closing_stock }}
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

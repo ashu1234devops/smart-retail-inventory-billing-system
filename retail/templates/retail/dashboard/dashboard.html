@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Smart Retail</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 20px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-title {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1400px;
+            margin: 30px auto;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            margin-bottom: 6px;
+        }
+
+        .page-header p {
+            color: #777;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card-title {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .card-number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .menu a {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+
+            text-decoration: none;
+            color: #1f2937;
+
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .menu a:hover {
+            background: #f9fafb;
+        }
+
+        .menu small {
+            display: block;
+            margin-top: 8px;
+            color: #777;
+            font-weight: normal;
+            font-size: 13px;
+        }
+
+        @media (max-width: 900px) {
+
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .menu {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                padding: 15px 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        🏪 SMART RETAIL
+    </div>
+
+    <div class="header-title">
+        Retail Management System
+    </div>
+
+</header>
+
+
+<div class="container">
+
+    <div class="page-header">
+
+        <h1>
+            Dashboard
+        </h1>
+
+        <p>
+            Welcome to Smart Retail Management System
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="card-title">
+                Total Vendors
+            </div>
+
+            <div class="card-number">
+                {{ vendor_count|default:"0" }}
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Total Purchases
+            </div>
+
+            <div class="card-number">
+                {{ purchase_count|default:"0" }}
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Total Sales
+            </div>
+
+            <div class="card-number">
+                {{ sale_count|default:"0" }}
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                Total Products
+            </div>
+
+            <div class="card-number">
+                {{ inventory_count|default:"0" }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="menu">
+
+        <a href="{% url 'vendor_list' %}">
+
+            👥 Vendors
+
+            <small>
+                Manage suppliers and vendor information
+            </small>
+
+        </a>
+
+
+        <a href="{% url 'purchase_list' %}">
+
+            📦 Purchases
+
+            <small>
+                Manage purchase invoices
+            </small>
+
+        </a>
+
+
+        <a href="{% url 'sale_list' %}">
+
+            🧾 Sales
+
+            <small>
+                Manage sales invoices
+            </small>
+
+        </a>
+
+
+        <a href="{% url 'inventory_list' %}">
+
+            📊 Inventory
+
+            <small>
+                Check stock and product details
+            </small>
+
+        </a>
+
+
+        <a href="{% url 'profit_loss_list' %}">
+
+            💰 Profit & Loss
+
+            <small>
+                View business profit and loss
+            </small>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

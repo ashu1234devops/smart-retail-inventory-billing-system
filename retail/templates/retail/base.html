@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}
+        Smart Retail
+        {% endblock %}
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+
+        /* =================================================
+           MAIN LAYOUT
+        ================================================= */
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+
+        /* =================================================
+           SIDEBAR
+        ================================================= */
+
+        .sidebar {
+            width: 225px;
+            background: #17212b;
+            color: white;
+            min-height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            padding: 22px 14px;
+        }
+
+
+        .logo {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+
+        .logo h1 {
+            margin: 0;
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+
+        .logo p {
+            margin: 7px 0 25px;
+            font-size: 10px;
+            color: #9ca3af;
+        }
+
+
+        .menu-title {
+            font-size: 10px;
+            color: #8b98a5;
+            letter-spacing: 1px;
+            margin: 22px 8px 10px;
+        }
+
+
+        .menu-link {
+            display: block;
+            text-decoration: none;
+            color: #e5e7eb;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+
+        .menu-link:hover {
+            background: #263544;
+            color: white;
+        }
+
+
+        .menu-link.active {
+            background: #2f8de4;
+            color: white;
+            font-weight: 600;
+        }
+
+
+        /* =================================================
+           CONTENT
+        ================================================= */
+
+        .content {
+            margin-left: 225px;
+            width: calc(100% - 225px);
+            min-height: 100vh;
+        }
+
+
+        /* =================================================
+           TOP BAR
+        ================================================= */
+
+        .topbar {
+            background: #202c3b;
+            color: white;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+        }
+
+
+        .topbar-title {
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+
+        .topbar-right {
+            font-size: 13px;
+            color: #d1d5db;
+        }
+
+
+        /* =================================================
+           PAGE
+        ================================================= */
+
+        .page {
+            padding: 30px;
+        }
+
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+
+        .page-header h1 {
+            margin: 0;
+            font-size: 30px;
+            color: #1f2937;
+        }
+
+
+        .page-header p {
+            margin: 7px 0 0;
+            color: #7b8794;
+            font-size: 14px;
+        }
+
+
+        /* =================================================
+           BUTTONS
+        ================================================= */
+
+        .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 7px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+
+        .btn-primary {
+            background: #2878e8;
+            color: white;
+        }
+
+
+        .btn-primary:hover {
+            background: #1767d4;
+        }
+
+
+        .btn-dark {
+            background: #182231;
+            color: white;
+        }
+
+
+        .btn-dark:hover {
+            background: #101822;
+        }
+
+
+        .btn-success {
+            background: #198754;
+            color: white;
+        }
+
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+
+        .btn-warning {
+            background: #f0ad4e;
+            color: white;
+        }
+
+
+        .btn-small {
+            padding: 7px 11px;
+            font-size: 12px;
+        }
+
+
+        /* =================================================
+           CARDS
+        ================================================= */
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 22px;
+        }
+
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+
+        /* =================================================
+           TABLE
+        ================================================= */
+
+        .table-wrapper {
+            overflow-x: auto;
+            background: white;
+            border-radius: 10px;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+
+        th {
+            background: #182331;
+            color: white;
+            padding: 13px 12px;
+            text-align: left;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+
+        td {
+            padding: 13px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+
+        tr:hover td {
+            background: #f8fafc;
+        }
+
+
+        .text-center {
+            text-align: center;
+        }
+
+
+        /* =================================================
+           SEARCH
+        ================================================= */
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            outline: none;
+        }
+
+
+        .search-box input:focus {
+            border-color: #2878e8;
+        }
+
+
+        /* =================================================
+           FORMS
+        ================================================= */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2878e8;
+        }
+
+
+        .errorlist {
+            color: #dc3545;
+            font-size: 13px;
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+
+        /* =================================================
+           SUMMARY CARDS
+        ================================================= */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+
+        .summary-card {
+            background: white;
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+        }
+
+
+        .summary-label {
+            color: #7b8794;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+
+        .summary-value {
+            font-size: 25px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+
+        /* =================================================
+           RESPONSIVE
+        ================================================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                width: 190px;
+            }
+
+            .content {
+                margin-left: 190px;
+                width: calc(100% - 190px);
+            }
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                min-height: auto;
+            }
+
+            .layout {
+                display: block;
+            }
+
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="layout">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h1>
+                🏪 SMART RETAIL
+            </h1>
+
+            <p>
+                Inventory & Billing System
+            </p>
+
+        </div>
+
+
+        <div class="menu-title">
+            MAIN MENU
+        </div>
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="menu-link
+            {% if request.resolver_match.url_name == 'dashboard' %}
+                active
+            {% endif %}"
+        >
+            🏠 Dashboard
+        </a>
+
+
+        <!-- VENDORS -->
+
+        <a
+            href="{% url 'vendor_list' %}"
+            class="menu-link
+            {% if request.resolver_match.url_name == 'vendor_list' or request.resolver_match.url_name == 'vendor_add' or request.resolver_match.url_name == 'vendor_edit' or request.resolver_match.url_name == 'vendor_delete' %}
+                active
+            {% endif %}"
+        >
+            👥 Vendors
+        </a>
+
+
+        <!-- PURCHASES -->
+
+        <a
+            href="{% url 'purchase_list' %}"
+            class="menu-link
+            {% if request.resolver_match.url_name == 'purchase_list' or request.resolver_match.url_name == 'purchase_add' or request.resolver_match.url_name == 'purchase_edit' or request.resolver_match.url_name == 'purchase_delete' %}
+                active
+            {% endif %}"
+        >
+            📦 Purchases
+        </a>
+
+
+        <!-- SALES -->
+
+        <a
+            href="{% url 'sale_list' %}"
+            class="menu-link
+            {% if request.resolver_match.url_name == 'sale_list' or request.resolver_match.url_name == 'sale_add' or request.resolver_match.url_name == 'sale_edit' or request.resolver_match.url_name == 'sale_delete' or request.resolver_match.url_name == 'sale_invoice_pdf' %}
+                active
+            {% endif %}"
+        >
+            🧾 Sales
+        </a>
+
+
+        <!-- INVENTORY -->
+
+        <a
+            href="{% url 'inventory_list' %}"
+            class="menu-link
+            {% if request.resolver_match.url_name == 'inventory_list' or request.resolver_match.url_name == 'inventory_add' or request.resolver_match.url_name == 'inventory_detail' %}
+                active
+            {% endif %}"
+        >
+            📊 Inventory
+        </a>
+
+
+        <!-- PROFIT & LOSS -->
+
+        <a
+            href="{% url 'profit_loss_list' %}"
+            class="menu-link
+            {% if request.resolver_match.url_name == 'profit_loss_list' %}
+                active
+            {% endif %}"
+        >
+            💰 Profit & Loss
+        </a>
+
+
+        <div class="menu-title">
+            SYSTEM
+        </div>
+
+
+        <a
+            href="/admin/"
+            class="menu-link"
+        >
+            ⚙ Admin Panel
+        </a>
+
+    </aside>
+
+
+    <!-- =================================================
+         MAIN CONTENT
+    ================================================= -->
+
+    <main class="content">
+
+
+        <header class="topbar">
+
+            <div class="topbar-title">
+                🏪 SMART RETAIL
+            </div>
+
+            <div class="topbar-right">
+                Retail Management System
+            </div>
+
+        </header>
+
+
+        <section class="page">
+
+            {% block content %}
+
+            {% endblock %}
+
+        </section>
+
+
+    </main>
+
+</div>
+
+
+</body>
+
+</html>

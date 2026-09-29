@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ page_title }} | Smart Retail</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-title {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
+
+        /* PAGE HEADER */
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            color: #777;
+        }
+
+        /* CARD */
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        /* FORM GRID */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+
+        .required {
+            color: #dc2626;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37,99,235,0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+        }
+
+        /* AMOUNT SECTION */
+
+        .amount-section {
+            grid-column: 1 / -1;
+            margin-top: 10px;
+        }
+
+        .amount-section h2 {
+            font-size: 22px;
+            color: #1f2937;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .calculation-info {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #1e3a8a;
+            line-height: 1.6;
+        }
+
+        /* READONLY */
+
+        .readonly {
+            background: #f3f4f6;
+            cursor: not-allowed;
+        }
+
+        /* BUTTONS */
+
+        .button-area {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* ERRORS */
+
+        .error {
+            color: #dc2626;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .form-errors {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 768px) {
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full,
+            .amount-section,
+            .button-area {
+                grid-column: auto;
+            }
+
+            .button-area {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+        🏪 SMART RETAIL
+    </div>
+
+    <div class="header-title">
+        Retail Management System
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="container">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <h1>
+            {{ page_title }}
+        </h1>
+
+        <p>
+            Enter purchase invoice and product details
+        </p>
+
+    </div>
+
+
+    <!-- FORM CARD -->
+
+    <div class="form-card">
+
+
+        {% if form.non_field_errors %}
+
+            <div class="form-errors">
+
+                {{ form.non_field_errors }}
+
+            </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <div class="form-grid">
+
+
+                <!-- =================================================
+                     INVOICE DATE
+                ================================================== -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.purchase_invoice_date.id_for_label }}">
+                        Invoice Date
+                        <span class="required">*</span>
+                    </label>
+
+                    {{ form.purchase_invoice_date }}
+
+                    {% for error in form.purchase_invoice_date.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- =================================================
+                     INVOICE NUMBER
+                ================================================== -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.purchase_invoice_number.id_for_label }}">
+                        Invoice Number
+                        <span class="required">*</span>
+                    </label>
+
+                    {{ form.purchase_invoice_number }}
+
+                    {% for error in form.purchase_invoice_number.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- =================================================
+                     VENDOR
+                ================================================== -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.vendor_name.id_for_label }}">
+                        Vendor Name
+                        <span class="required">*</span>
+                    </label>
+
+                    {{ form.vendor_name }}
+
+                    {% for error in form.vendor_name.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- =================================================
+                     PAYMENT TERM
+                ================================================== -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.payment_term.id_for_label }}">
+                        Payment Term
+                    </label>
+
+                    {{ form.payment_term }}
+
+                    {% for error in form.payment_term.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- =================================================
+                     PRODUCT NAME
+                ================================================== -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.product_name.id_for_label }}">
+                        Product Name
+                        <span class="required">*</span>
+                    </label>
+
+                    {{ form.product_name }}
+
+                    {% for error in form.product_name.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- =================================================
+                     PRODUCT COMPANY
+                ================================================== -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.product_company.id_for_label }}">
+                        Product Company
+                    </label>
+
+                    {{ form.product_company }}
+
+                    {% for error in form.product_company.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- =================================================
+                     QUANTITY
+                ================================================== -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.qty.id_for_label }}">
+                        Quantity
+                        <span class="required">*</span>
+                    </label>
+
+                    {{ form.qty }}
+
+                    {% for error in form.qty.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- =================================================
+                     RATE
+                ================================================== -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.rate.id_for_label }}">
+                        Rate
+                        <span class="required">*</span>
+                    </label>
+
+                    {{ form.rate }}
+
+                    {% for error in form.rate.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- =================================================
+                     AMOUNT DETAILS
+                ================================================== -->
+
+                <div class="amount-section">
+
+                    <h2>
+                        Amount Details
+                    </h2>
+
+
+                    <div class="calculation-info">
+
+                        <strong>Automatic Calculation:</strong>
+
+                        Net Amount = Quantity × Rate
+
+                        |
+
+                        GST Amount = Net Amount × GST % ÷ 100
+
+                        |
+
+                        Gross Amount = Net Amount + GST Amount
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <!-- NET AMOUNT -->
+
+                        <div class="form-group">
+
+                            <label for="{{ form.net_amount.id_for_label }}">
+                                Net Amount
+                            </label>
+
+                            <input
+                                type="number"
+                                name="net_amount"
+                                id="id_net_amount"
+                                class="form-control readonly"
+                                step="0.01"
+                                readonly
+                                value="{{ form.net_amount.value|default:'' }}"
+                            >
+
+                            {% for error in form.net_amount.errors %}
+                                <div class="error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- GST % -->
+
+                        <div class="form-group">
+
+                            <label for="{{ form.gst_percent.id_for_label }}">
+                                GST %
+                            </label>
+
+                            {{ form.gst_percent }}
+
+                            {% for error in form.gst_percent.errors %}
+                                <div class="error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- GST AMOUNT -->
+
+                        <div class="form-group">
+
+                            <label for="{{ form.gst_amount.id_for_label }}">
+                                GST Amount
+                            </label>
+
+                            <input
+                                type="number"
+                                name="gst_amount"
+                                id="id_gst_amount"
+                                class="form-control readonly"
+                                step="0.01"
+                                readonly
+                                value="{{ form.gst_amount.value|default:'' }}"
+                            >
+
+                            {% for error in form.gst_amount.errors %}
+                                <div class="error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- GROSS AMOUNT -->
+
+                        <div class="form-group">
+
+                            <label for="{{ form.gross_amount.id_for_label }}">
+                                Gross Amount
+                            </label>
+
+                            <input
+                                type="number"
+                                name="gross_amount"
+                                id="id_gross_amount"
+                                class="form-control readonly"
+                                step="0.01"
+                                readonly
+                                value="{{ form.gross_amount.value|default:'' }}"
+                            >
+
+                            {% for error in form.gross_amount.errors %}
+                                <div class="error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     BUTTONS
+                ================================================== -->
+
+                <div class="button-area">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        Save Purchase
+
+                    </button>
+
+
+                    <a
+                        href="{% url 'purchase_list' %}"
+                        class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     AUTOMATIC CALCULATION JAVASCRIPT
+===================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+
+    // Get input fields
+
+    const qtyField = document.getElementById("id_qty");
+
+    const rateField = document.getElementById("id_rate");
+
+    const gstPercentField = document.getElementById("id_gst_percent");
+
+    const netAmountField = document.getElementById("id_net_amount");
+
+    const gstAmountField = document.getElementById("id_gst_amount");
+
+    const grossAmountField = document.getElementById("id_gross_amount");
+
+
+    // Calculation function
+
+    function calculateAmounts() {
+
+
+        // Convert values to numbers
+
+        const qty = parseFloat(qtyField.value) || 0;
+
+        const rate = parseFloat(rateField.value) || 0;
+
+        const gstPercent = parseFloat(gstPercentField.value) || 0;
+
+
+        // Net Amount
+
+        const netAmount = qty * rate;
+
+
+        // GST Amount
+
+        const gstAmount = netAmount * gstPercent / 100;
+
+
+        // Gross Amount
+
+        const grossAmount = netAmount + gstAmount;
+
+
+        // Display calculated values
+
+        netAmountField.value = netAmount.toFixed(2);
+
+        gstAmountField.value = gstAmount.toFixed(2);
+
+        grossAmountField.value = grossAmount.toFixed(2);
+
+    }
+
+
+    // Calculate when Quantity changes
+
+    qtyField.addEventListener(
+        "input",
+        calculateAmounts
+    );
+
+
+    // Calculate when Rate changes
+
+    rateField.addEventListener(
+        "input",
+        calculateAmounts
+    );
+
+
+    // Calculate when GST changes
+
+    gstPercentField.addEventListener(
+        "input",
+        calculateAmounts
+    );
+
+
+    // Calculate once when page loads
+
+    calculateAmounts();
+
+});
+
+</script>
+
+
+</body>
+
+</html>

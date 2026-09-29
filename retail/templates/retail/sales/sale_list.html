@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sales Management | Smart Retail</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .system-name {
+            font-size: 18px;
+            color: #d1d5db;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 1400px;
+            margin: 40px auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: 38px;
+            color: #1f2937;
+        }
+
+        .page-subtitle {
+            margin-top: 8px;
+            color: #6b7280;
+            font-size: 18px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            padding: 13px 22px;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-dashboard {
+            background: #374151;
+            color: white;
+        }
+
+        .btn-dashboard:hover {
+            background: #1f2937;
+        }
+
+        .btn-edit {
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 8px 14px;
+            font-size: 14px;
+        }
+
+        .btn-delete {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 8px 14px;
+            font-size: 14px;
+        }
+
+        .btn-invoice {
+            background: #dcfce7;
+            color: #15803d;
+            padding: 8px 14px;
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            width: 280px;
+            padding: 11px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .search-btn {
+            background: #374151;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 11px 18px;
+            cursor: pointer;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1450px;
+        }
+
+        thead {
+            background: #1f2937;
+            color: white;
+        }
+
+        th {
+            padding: 16px 12px;
+            text-align: left;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        .amount {
+            font-weight: 600;
+        }
+
+        .profit {
+            color: #16a34a;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+            font-size: 18px;
+        }
+
+        @media (max-width: 900px) {
+            .header {
+                padding: 20px;
+            }
+
+            .container {
+                width: 96%;
+            }
+
+            .page-header,
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+
+            .button-group {
+                flex-wrap: wrap;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="logo">🏪 SMART RETAIL</div>
+    <div class="system-name">Retail Management System</div>
+</div>
+
+<div class="container">
+
+    <div class="page-header">
+
+        <div>
+            <h1 class="page-title">Sales Management</h1>
+            <div class="page-subtitle">
+                Manage sales invoices and customer transactions
+            </div>
+        </div>
+
+        <div class="button-group">
+
+            <a href="{% url 'dashboard' %}" class="btn btn-dashboard">
+                ← Dashboard
+            </a>
+
+            <a href="{% url 'sale_add' %}" class="btn btn-primary">
+                + Add Sale
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <h2 class="card-title">Sales List</h2>
+
+            <form method="GET" class="search-box">
+
+                <input
+                    type="text"
+                    name="search"
+                    value="{{ search }}"
+                    placeholder="Search product..."
+                >
+
+                <button type="submit" class="search-btn">
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="table-container">
+
+            {% if sales %}
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Invoice Date</th>
+                        <th>Invoice No.</th>
+                        <th>Customer</th>
+                        <th>Customer No.</th>
+                        <th>Product</th>
+                        <th>Company</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th>Net Amount</th>
+                        <th>GST %</th>
+                        <th>GST Amount</th>
+                        <th>Gross Amount</th>
+                        <th>Warranty</th>
+                        <th>Warranty Expiry</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for sale in sales %}
+
+                    <tr>
+
+                        <td>{{ forloop.counter }}</td>
+
+                        <td>
+                            {{ sale.sales_invoice_date|date:"d-m-Y" }}
+                        </td>
+
+                        <td>
+                            <strong>{{ sale.sales_invoice_number }}</strong>
+                        </td>
+
+                        <td>{{ sale.customer_name }}</td>
+
+                        <td>
+                            {{ sale.customer_number|default:"-" }}
+                        </td>
+
+                        <td>
+                            <strong>{{ sale.product }}</strong>
+                        </td>
+
+                        <td>
+                            {{ sale.product_company|default:"-" }}
+                        </td>
+
+                        <td>{{ sale.sales_qty }}</td>
+
+                        <td>
+                            ₹ {{ sale.sales_rate|floatformat:2 }}
+                        </td>
+
+                        <td class="amount">
+                            ₹ {{ sale.sales_net_amount|floatformat:2 }}
+                        </td>
+
+                        <td>
+                            {{ sale.gst_percent|floatformat:2 }}%
+                        </td>
+
+                        <td>
+                            ₹ {{ sale.sales_gst_amount|floatformat:2 }}
+                        </td>
+
+                        <td class="amount profit">
+                            ₹ {{ sale.gross_amount|floatformat:2 }}
+                        </td>
+
+                        <td>
+                            {{ sale.warranty_days }} days
+                        </td>
+
+                        <td>
+                            {{ sale.warranty_expiry|date:"d-m-Y"|default:"-" }}
+                        </td>
+
+                        <td>
+                            <div class="actions">
+
+                                <a
+                                    href="{% url 'sale_invoice_pdf' sale.pk %}"
+                                    class="btn btn-invoice"
+                                    target="_blank"
+                                >
+                                    📄 Invoice
+                                </a>
+
+                                <a
+                                    href="{% url 'sale_edit' sale.pk %}"
+                                    class="btn btn-edit"
+                                >
+                                    Edit
+                                </a>
+
+                                <a
+                                    href="{% url 'sale_delete' sale.pk %}"
+                                    class="btn btn-delete"
+                                >
+                                    Delete
+                                </a>
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <div class="empty">
+
+                <p>No sales records found.</p>
+
+                <a href="{% url 'sale_add' %}" class="btn btn-primary">
+                    + Add First Sale
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

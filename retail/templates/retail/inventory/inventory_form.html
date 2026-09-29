@@ -1,0 +1,130 @@
+{% extends "retail/base.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h1 class="fw-bold">Add Product</h1>
+        <p class="text-muted">
+            Add a product to your inventory and set its opening stock
+        </p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <!-- Form Errors -->
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="row">
+
+                    <!-- Product Name -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Product Name <span class="text-danger">*</span>
+                        </label>
+
+                        {{ form.product_name }}
+
+                        {% for error in form.product_name.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Product Company -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Product Company
+                        </label>
+
+                        {{ form.product_company }}
+
+                        {% for error in form.product_company.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Opening Stock -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">
+                            Opening Stock <span class="text-danger">*</span>
+                        </label>
+
+                        {{ form.opening_stock }}
+
+                        <div class="form-text">
+                            Enter the stock already available before purchases.
+                        </div>
+
+                        {% for error in form.opening_stock.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <!-- Inventory Information -->
+                <div class="alert alert-primary mt-3">
+                    <h5 class="fw-bold">Inventory Calculation:</h5>
+
+                    <div>
+                        Inward Stock will automatically come from
+                        <strong>Purchase</strong> records.
+                    </div>
+
+                    <div>
+                        Outward Stock will automatically come from
+                        <strong>Sales</strong> records.
+                    </div>
+
+                    <div>
+                        Closing Stock =
+                        <strong>Opening Stock + Inward Stock - Outward Stock</strong>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="mt-4 d-flex gap-2">
+
+                    <button type="submit" class="btn btn-primary px-4">
+                        Save Product
+                    </button>
+
+                    <a href="{% url 'inventory_list' %}"
+                       class="btn btn-secondary px-4">
+                        Back to Inventory
+                    </a>
+
+                    <a href="{% url 'dashboard' %}"
+                       class="btn btn-outline-primary px-4">
+                        Dashboard
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

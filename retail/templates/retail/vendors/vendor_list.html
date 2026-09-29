@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Vendor Management | Smart Retail</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-title {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1400px;
+            margin: 30px auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            color: #777;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-dashboard {
+            background: #374151;
+            color: white;
+        }
+
+        .btn-dashboard:hover {
+            background: #1f2937;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-edit {
+            background: #e0ecff;
+            color: #1d4ed8;
+            padding: 7px 12px;
+        }
+
+        .btn-delete {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 7px 12px;
+        }
+
+        .search-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-button {
+            background: #111827;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .table-title {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        th {
+            background: #1f2937;
+            color: white;
+            padding: 14px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .vendor-name {
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .actions {
+            display: flex;
+            gap: 7px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .button-group {
+                flex-wrap: wrap;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        🏪 SMART RETAIL
+    </div>
+
+    <div class="header-title">
+        Retail Management System
+    </div>
+
+</header>
+
+<div class="container">
+
+    <div class="page-header">
+
+        <div>
+            <h1>Vendor Management</h1>
+
+            <p>
+                Manage your suppliers and vendor information
+            </p>
+        </div>
+
+        <div class="button-group">
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="btn btn-dashboard"
+            >
+                ← Dashboard
+            </a>
+
+            <a
+                href="{% url 'vendor_add' %}"
+                class="btn btn-primary"
+            >
+                + Add Vendor
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="search-card">
+
+        <form method="GET" class="search-form">
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                class="search-input"
+                placeholder="Search vendor by name..."
+            >
+
+            <button type="submit" class="search-button">
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="table-card">
+
+        <div class="table-title">
+            Vendor List
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Vendor Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Payment Terms</th>
+                        <th>GST</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for vendor in vendors %}
+
+                    <tr>
+
+                        <td>{{ forloop.counter }}</td>
+
+                        <td class="vendor-name">
+                            {{ vendor.vendor_name }}
+                        </td>
+
+                        <td>
+                            {{ vendor.vendor_email|default:"-" }}
+                        </td>
+
+                        <td>
+                            {{ vendor.vendor_phone }}
+                        </td>
+
+                        <td>
+                            {{ vendor.vendor_address|default:"-" }}
+                        </td>
+
+                        <td>
+                            {{ vendor.payment_terms|default:"-" }}
+                        </td>
+
+                        <td>
+                            {{ vendor.vendor_gst|default:"-" }}
+                        </td>
+
+                        <td>
+                            <div class="actions">
+
+                                <a
+                                    href="{% url 'vendor_edit' vendor.id %}"
+                                    class="btn btn-edit"
+                                >
+                                    Edit
+                                </a>
+
+                                <a
+                                    href="{% url 'vendor_delete' vendor.id %}"
+                                    class="btn btn-delete"
+                                >
+                                    Delete
+                                </a>
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="8" class="empty">
+                            No vendors found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

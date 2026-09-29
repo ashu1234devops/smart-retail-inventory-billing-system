@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Profit & Loss | Smart Retail</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        /* ==============================
+           HEADER
+        ============================== */
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .header-title {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* ==============================
+           CONTAINER
+        ============================== */
+
+        .container {
+            width: 94%;
+            max-width: 1500px;
+            margin: 30px auto;
+        }
+
+        /* ==============================
+           PAGE HEADER
+        ============================== */
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-header h1 {
+            font-size: 30px;
+            margin-bottom: 6px;
+            color: #1f2937;
+        }
+
+        .page-header p {
+            color: #777;
+        }
+
+        /* ==============================
+           BUTTONS
+        ============================== */
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-dashboard {
+            background: #374151;
+            color: white;
+        }
+
+        .btn-dashboard:hover {
+            background: #1f2937;
+        }
+
+        /* ==============================
+           FILTER CARD
+        ============================== */
+
+        .filter-card {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .filter-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 18px;
+            color: #1f2937;
+        }
+
+        .filter-form {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .date-input {
+            padding: 11px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            min-width: 190px;
+        }
+
+        .date-input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .btn-filter {
+            background: #2563eb;
+            color: white;
+            padding: 11px 20px;
+        }
+
+        .btn-filter:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-reset {
+            background: #e5e7eb;
+            color: #1f2937;
+            padding: 11px 20px;
+        }
+
+        .btn-reset:hover {
+            background: #d1d5db;
+        }
+
+        /* ==============================
+           SUMMARY CARDS
+        ============================== */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .summary-label {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .summary-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .purchase-value {
+            color: #2563eb;
+        }
+
+        .sales-value {
+            color: #059669;
+        }
+
+        .profit-value {
+            color: #16a34a;
+        }
+
+        .loss-value {
+            color: #dc2626;
+        }
+
+        /* ==============================
+           NET RESULT
+        ============================== */
+
+        .result-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.08);
+
+            margin-bottom: 25px;
+        }
+
+        .result-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .result-value {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .result-profit {
+            color: #16a34a;
+        }
+
+        .result-loss {
+            color: #dc2626;
+        }
+
+        .result-neutral {
+            color: #6b7280;
+        }
+
+        /* ==============================
+           TABLE CARD
+        ============================== */
+
+        .table-card {
+            background: white;
+            border-radius: 10px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.08);
+
+            overflow: hidden;
+        }
+
+        .table-title {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+
+            font-size: 18px;
+            font-weight: bold;
+
+            color: #1f2937;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th {
+            background: #1f2937;
+            color: white;
+
+            padding: 14px;
+
+            text-align: left;
+
+            font-size: 13px;
+        }
+
+        td {
+            padding: 14px;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 14px;
+
+            white-space: nowrap;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .date {
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .amount {
+            font-weight: bold;
+        }
+
+        .profit {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .loss {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .no-profit {
+            color: #999;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+        }
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 1000px) {
+
+            .summary-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .header-title {
+                display: none;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .button-group {
+                flex-wrap: wrap;
+            }
+
+            .filter-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .date-input {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
+
+<header class="header">
+
+    <div class="logo">
+        🏪 SMART RETAIL
+    </div>
+
+    <div class="header-title">
+        Retail Management System
+    </div>
+
+</header>
+
+
+<!-- ==========================================
+     MAIN CONTAINER
+========================================== -->
+
+<div class="container">
+
+
+    <!-- ======================================
+         PAGE HEADER
+    ======================================= -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                Profit &amp; Loss
+            </h1>
+
+            <p>
+                Track daily purchases, sales, profit and loss
+            </p>
+
+        </div>
+
+
+        <div class="button-group">
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="btn btn-dashboard"
+            >
+                ← Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         DATE FILTER
+    ======================================= -->
+
+    <div class="filter-card">
+
+        <div class="filter-title">
+            Filter Report
+        </div>
+
+
+        <form
+            method="GET"
+            class="filter-form"
+        >
+
+
+            <div class="form-group">
+
+                <label for="from_date">
+                    From Date
+                </label>
+
+                <input
+                    type="date"
+                    id="from_date"
+                    name="from_date"
+                    value="{{ from_date }}"
+                    class="date-input"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="to_date">
+                    To Date
+                </label>
+
+                <input
+                    type="date"
+                    id="to_date"
+                    name="to_date"
+                    value="{{ to_date }}"
+                    class="date-input"
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="btn btn-filter"
+            >
+                Filter
+            </button>
+
+
+            <a
+                href="{% url 'profit_loss_list' %}"
+                class="btn btn-reset"
+            >
+                Reset
+            </a>
+
+
+        </form>
+
+    </div>
+
+
+    <!-- ======================================
+         SUMMARY CARDS
+    ======================================= -->
+
+    <div class="summary-grid">
+
+
+        <!-- TOTAL PURCHASE -->
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Purchase
+            </div>
+
+            <div class="summary-value purchase-value">
+
+                ₹ {{ total_purchase|floatformat:2 }}
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL SALES -->
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Sales
+            </div>
+
+            <div class="summary-value sales-value">
+
+                ₹ {{ total_sales|floatformat:2 }}
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL PROFIT -->
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Profit
+            </div>
+
+            <div class="summary-value profit-value">
+
+                ₹ {{ total_profit|floatformat:2 }}
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL LOSS -->
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Loss
+            </div>
+
+            <div class="summary-value loss-value">
+
+                ₹ {{ total_loss|floatformat:2 }}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ======================================
+         NET RESULT
+    ======================================= -->
+
+    <div class="result-card">
+
+        <div class="result-title">
+            Net Result
+        </div>
+
+
+        {% if net_result > 0 %}
+
+            <div class="result-value result-profit">
+
+                Profit:
+                ₹ {{ net_result|floatformat:2 }}
+
+            </div>
+
+
+        {% elif net_result < 0 %}
+
+            <div class="result-value result-loss">
+
+                Loss:
+                ₹ {{ net_result|floatformat:2|cut:"-" }}
+
+            </div>
+
+
+        {% else %}
+
+            <div class="result-value result-neutral">
+
+                No Profit / No Loss
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+    <!-- ======================================
+         P&L TABLE
+    ======================================= -->
+
+    <div class="table-card">
+
+
+        <div class="table-title">
+
+            Daily Profit &amp; Loss Report
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Date
+                        </th>
+
+                        <th>
+                            Purchase Amount
+                        </th>
+
+                        <th>
+                            Sales Amount
+                        </th>
+
+                        <th>
+                            Profit
+                        </th>
+
+                        <th>
+                            Loss
+                        </th>
+
+                        <th>
+                            Result
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for item in profit_losses %}
+
+                    <tr>
+
+
+                        <td>
+                            {{ forloop.counter }}
+                        </td>
+
+
+                        <td class="date">
+
+                            {{ item.date|date:"d-m-Y" }}
+
+                        </td>
+
+
+                        <td class="amount">
+
+                            ₹ {{ item.purchase_amount|floatformat:2 }}
+
+                        </td>
+
+
+                        <td class="amount">
+
+                            ₹ {{ item.sales_amount|floatformat:2 }}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if item.profit > 0 %}
+
+                                <span class="profit">
+
+                                    ₹ {{ item.profit|floatformat:2 }}
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="no-profit">
+                                    -
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if item.loss > 0 %}
+
+                                <span class="loss">
+
+                                    ₹ {{ item.loss|floatformat:2 }}
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="no-profit">
+                                    -
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            {% if item.profit > 0 %}
+
+                                <span class="profit">
+                                    Profit
+                                </span>
+
+                            {% elif item.loss > 0 %}
+
+                                <span class="loss">
+                                    Loss
+                                </span>
+
+                            {% else %}
+
+                                <span class="no-profit">
+                                    No Profit / No Loss
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% empty %}
+
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="empty"
+                        >
+
+                            No profit &amp; loss records found.
+
+                        </td>
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1034 @@
+{% extends 'retail/base.html' %}
+
+{% block title %}
+    {{ page_title|default:"Add Sale" }} | Smart Retail
+{% endblock %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <div class="page-header">
+
+        <div>
+            <h1>{{ page_title|default:"Add Sale" }}</h1>
+
+            <p>
+                Enter customer, product and sales information
+            </p>
+        </div>
+
+        <a href="{% url 'sale_list' %}" class="btn btn-secondary">
+            ← Back to Sales
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         FORM CARD
+    ====================================================== -->
+
+    <div class="form-card">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <!-- FORM ERRORS -->
+
+            {% if form.non_field_errors %}
+
+                <div class="alert alert-danger">
+
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- =================================================
+                 SALES INFORMATION
+            ================================================== -->
+
+            <div class="section-title">
+                Sales Information
+            </div>
+
+            <div class="form-grid">
+
+                <!-- SALES INVOICE DATE -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.sales_invoice_date.id_for_label }}">
+                        Sales Invoice Date
+                    </label>
+
+                    {{ form.sales_invoice_date }}
+
+                    {% if form.sales_invoice_date.errors %}
+                        <div class="field-error">
+                            {{ form.sales_invoice_date.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- SALES INVOICE NUMBER -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.sales_invoice_number.id_for_label }}">
+                        Sales Invoice Number
+                    </label>
+
+                    {{ form.sales_invoice_number }}
+
+                    {% if form.sales_invoice_number.errors %}
+                        <div class="field-error">
+                            {{ form.sales_invoice_number.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- CUSTOMER NAME -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.customer_name.id_for_label }}">
+                        Customer Name
+                    </label>
+
+                    {{ form.customer_name }}
+
+                    {% if form.customer_name.errors %}
+                        <div class="field-error">
+                            {{ form.customer_name.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- CUSTOMER NUMBER -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.customer_number.id_for_label }}">
+                        Customer Number
+                    </label>
+
+                    {{ form.customer_number }}
+
+                    {% if form.customer_number.errors %}
+                        <div class="field-error">
+                            {{ form.customer_number.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- PAYMENT TYPE -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.payment_type.id_for_label }}">
+                        Payment Type
+                    </label>
+
+                    {{ form.payment_type }}
+
+                    {% if form.payment_type.errors %}
+                        <div class="field-error">
+                            {{ form.payment_type.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PRODUCT INFORMATION
+            ================================================== -->
+
+            <div class="section-title">
+                Product Information
+            </div>
+
+            <div class="form-grid">
+
+                <!-- PRODUCT COMPANY -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.product_company.id_for_label }}">
+                        Product Company
+                    </label>
+
+                    {{ form.product_company }}
+
+                    {% if form.product_company.errors %}
+                        <div class="field-error">
+                            {{ form.product_company.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- PRODUCT -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.product.id_for_label }}">
+                        Product
+                    </label>
+
+                    {{ form.product }}
+
+                    {% if form.product.errors %}
+                        <div class="field-error">
+                            {{ form.product.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- SALES QUANTITY -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.sales_qty.id_for_label }}">
+                        Sales Quantity
+                    </label>
+
+                    {{ form.sales_qty }}
+
+                    {% if form.sales_qty.errors %}
+                        <div class="field-error">
+                            {{ form.sales_qty.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- SALES RATE -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.sales_rate.id_for_label }}">
+                        Sales Rate
+                    </label>
+
+                    {{ form.sales_rate }}
+
+                    {% if form.sales_rate.errors %}
+                        <div class="field-error">
+                            {{ form.sales_rate.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SALES CALCULATION
+            ================================================== -->
+
+            <div class="section-title">
+                Sales Calculation
+            </div>
+
+            <div class="form-grid">
+
+                <!-- SALES NET AMOUNT -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.sales_net_amount.id_for_label }}">
+                        Sales Net Amount
+                    </label>
+
+                    {{ form.sales_net_amount }}
+
+                    <small class="calculation-note">
+                        Automatically calculated: Quantity × Rate
+                    </small>
+
+                    {% if form.sales_net_amount.errors %}
+                        <div class="field-error">
+                            {{ form.sales_net_amount.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- GST PERCENT -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.gst_percent.id_for_label }}">
+                        GST %
+                    </label>
+
+                    {{ form.gst_percent }}
+
+                    <small class="calculation-note">
+                        Enter GST percentage
+                    </small>
+
+                    {% if form.gst_percent.errors %}
+                        <div class="field-error">
+                            {{ form.gst_percent.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- SALES GST AMOUNT -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.sales_gst_amount.id_for_label }}">
+                        Sales GST Amount
+                    </label>
+
+                    {{ form.sales_gst_amount }}
+
+                    <small class="calculation-note">
+                        Automatically calculated
+                    </small>
+
+                    {% if form.sales_gst_amount.errors %}
+                        <div class="field-error">
+                            {{ form.sales_gst_amount.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- GROSS AMOUNT -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.gross_amount.id_for_label }}">
+                        Gross Amount
+                    </label>
+
+                    {{ form.gross_amount }}
+
+                    <small class="calculation-note">
+                        Automatically calculated
+                    </small>
+
+                    {% if form.gross_amount.errors %}
+                        <div class="field-error">
+                            {{ form.gross_amount.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 WARRANTY INFORMATION
+            ================================================== -->
+
+            <div class="section-title">
+                Warranty Information
+            </div>
+
+            <div class="form-grid">
+
+                <!-- WARRANTY DAYS -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.warranty_days.id_for_label }}">
+                        Warranty Days
+                    </label>
+
+                    {{ form.warranty_days }}
+
+                    <small class="calculation-note">
+                        Example: 365 for 1 year warranty
+                    </small>
+
+                    {% if form.warranty_days.errors %}
+                        <div class="field-error">
+                            {{ form.warranty_days.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+
+                <!-- WARRANTY EXPIRY -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.warranty_expiry.id_for_label }}">
+                        Warranty Expiry
+                    </label>
+
+                    {{ form.warranty_expiry }}
+
+                    <small class="calculation-note">
+                        Automatically calculated from invoice date + warranty days
+                    </small>
+
+                    {% if form.warranty_expiry.errors %}
+                        <div class="field-error">
+                            {{ form.warranty_expiry.errors }}
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 BUTTONS
+            ================================================== -->
+
+            <div class="form-actions">
+
+                <a href="{% url 'sale_list' %}"
+                   class="btn btn-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Save Sale
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     LIVE SALES CALCULATION
+========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =====================================================
+       GET FORM FIELDS
+    ===================================================== */
+
+    const salesQty = document.getElementById(
+        "{{ form.sales_qty.id_for_label }}"
+    );
+
+    const salesRate = document.getElementById(
+        "{{ form.sales_rate.id_for_label }}"
+    );
+
+    const gstPercent = document.getElementById(
+        "{{ form.gst_percent.id_for_label }}"
+    );
+
+    const salesNetAmount = document.getElementById(
+        "{{ form.sales_net_amount.id_for_label }}"
+    );
+
+    const salesGstAmount = document.getElementById(
+        "{{ form.sales_gst_amount.id_for_label }}"
+    );
+
+    const grossAmount = document.getElementById(
+        "{{ form.gross_amount.id_for_label }}"
+    );
+
+    const invoiceDate = document.getElementById(
+        "{{ form.sales_invoice_date.id_for_label }}"
+    );
+
+    const warrantyDays = document.getElementById(
+        "{{ form.warranty_days.id_for_label }}"
+    );
+
+    const warrantyExpiry = document.getElementById(
+        "{{ form.warranty_expiry.id_for_label }}"
+    );
+
+
+    /* =====================================================
+       SALES CALCULATION
+       
+       Net = Quantity × Rate
+       GST = Net × GST% / 100
+       Gross = Net + GST
+    ===================================================== */
+
+    function calculateSales() {
+
+        const qty = parseFloat(
+            salesQty ? salesQty.value : 0
+        ) || 0;
+
+        const rate = parseFloat(
+            salesRate ? salesRate.value : 0
+        ) || 0;
+
+        const gst = parseFloat(
+            gstPercent ? gstPercent.value : 0
+        ) || 0;
+
+
+        const netAmount = qty * rate;
+
+        const gstAmount = netAmount * gst / 100;
+
+        const totalAmount = netAmount + gstAmount;
+
+
+        if (salesNetAmount) {
+
+            salesNetAmount.value =
+                netAmount.toFixed(2);
+
+        }
+
+
+        if (salesGstAmount) {
+
+            salesGstAmount.value =
+                gstAmount.toFixed(2);
+
+        }
+
+
+        if (grossAmount) {
+
+            grossAmount.value =
+                totalAmount.toFixed(2);
+
+        }
+
+    }
+
+
+    /* =====================================================
+       WARRANTY EXPIRY CALCULATION
+
+       Warranty Expiry =
+       Invoice Date + Warranty Days
+    ===================================================== */
+
+    function calculateWarranty() {
+
+        if (
+            !invoiceDate ||
+            !warrantyDays ||
+            !warrantyExpiry
+        ) {
+            return;
+        }
+
+
+        const dateValue = invoiceDate.value;
+
+        const days =
+            parseInt(warrantyDays.value, 10) || 0;
+
+
+        if (!dateValue) {
+
+            warrantyExpiry.value = "";
+
+            return;
+
+        }
+
+
+        const parts = dateValue.split("-");
+
+
+        if (parts.length !== 3) {
+
+            warrantyExpiry.value = "";
+
+            return;
+
+        }
+
+
+        const year =
+            parseInt(parts[0], 10);
+
+        const month =
+            parseInt(parts[1], 10) - 1;
+
+        const day =
+            parseInt(parts[2], 10);
+
+
+        const expiryDate = new Date(
+            year,
+            month,
+            day
+        );
+
+
+        expiryDate.setDate(
+            expiryDate.getDate() + days
+        );
+
+
+        const expiryYear =
+            expiryDate.getFullYear();
+
+        const expiryMonth =
+            String(
+                expiryDate.getMonth() + 1
+            ).padStart(2, "0");
+
+        const expiryDay =
+            String(
+                expiryDate.getDate()
+            ).padStart(2, "0");
+
+
+        warrantyExpiry.value =
+            expiryYear +
+            "-" +
+            expiryMonth +
+            "-" +
+            expiryDay;
+
+    }
+
+
+    /* =====================================================
+       EVENT LISTENERS
+    ===================================================== */
+
+    if (salesQty) {
+
+        salesQty.addEventListener(
+            "input",
+            calculateSales
+        );
+
+        salesQty.addEventListener(
+            "change",
+            calculateSales
+        );
+
+    }
+
+
+    if (salesRate) {
+
+        salesRate.addEventListener(
+            "input",
+            calculateSales
+        );
+
+        salesRate.addEventListener(
+            "change",
+            calculateSales
+        );
+
+    }
+
+
+    if (gstPercent) {
+
+        gstPercent.addEventListener(
+            "input",
+            calculateSales
+        );
+
+        gstPercent.addEventListener(
+            "change",
+            calculateSales
+        );
+
+    }
+
+
+    if (invoiceDate) {
+
+        invoiceDate.addEventListener(
+            "input",
+            calculateWarranty
+        );
+
+        invoiceDate.addEventListener(
+            "change",
+            calculateWarranty
+        );
+
+    }
+
+
+    if (warrantyDays) {
+
+        warrantyDays.addEventListener(
+            "input",
+            calculateWarranty
+        );
+
+        warrantyDays.addEventListener(
+            "change",
+            calculateWarranty
+        );
+
+    }
+
+
+    /* =====================================================
+       INITIAL CALCULATION
+
+       Needed when editing an existing sale.
+    ===================================================== */
+
+    calculateSales();
+
+    calculateWarranty();
+
+});
+
+</script>
+
+
+<!-- =========================================================
+     PAGE STYLING
+========================================================= -->
+
+<style>
+
+.page-container {
+
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 30px 20px;
+}
+
+
+.page-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+
+.page-header h1 {
+
+    margin: 0;
+
+    font-size: 28px;
+
+    color: #172033;
+}
+
+
+.page-header p {
+
+    margin-top: 6px;
+
+    color: #64748b;
+}
+
+
+.form-card {
+
+    background: #ffffff;
+
+    border-radius: 10px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 2px 10px
+        rgba(0, 0, 0, 0.08);
+}
+
+
+.section-title {
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #172033;
+
+    border-bottom:
+        1px solid #e5e7eb;
+
+    padding-bottom: 10px;
+
+    margin-top: 25px;
+
+    margin-bottom: 18px;
+}
+
+
+.section-title:first-child {
+
+    margin-top: 0;
+}
+
+
+.form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px 20px;
+}
+
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.form-group label {
+
+    font-weight: 600;
+
+    font-size: 14px;
+
+    margin-bottom: 7px;
+
+    color: #334155;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border:
+        1px solid #cbd5e1;
+
+    border-radius: 6px;
+
+    font-size: 14px;
+
+    background: #ffffff;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+
+    outline: none;
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(37, 99, 235, 0.10);
+}
+
+
+/* =====================================================
+   AUTOMATICALLY CALCULATED FIELDS
+
+   IMPORTANT:
+   The # before {{ ... }} is required.
+===================================================== */
+
+#{{ form.sales_net_amount.id_for_label }},
+#{{ form.sales_gst_amount.id_for_label }},
+#{{ form.gross_amount.id_for_label }},
+#{{ form.warranty_expiry.id_for_label }} {
+
+    background-color: #f1f5f9;
+
+    font-weight: 600;
+
+}
+
+
+.calculation-note {
+
+    margin-top: 5px;
+
+    font-size: 12px;
+
+    color: #64748b;
+}
+
+
+.field-error {
+
+    margin-top: 5px;
+
+    color: #dc2626;
+
+    font-size: 13px;
+}
+
+
+.alert {
+
+    padding: 12px 15px;
+
+    border-radius: 6px;
+
+    margin-bottom: 20px;
+}
+
+
+.alert-danger {
+
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+
+.form-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 30px;
+
+    padding-top: 20px;
+
+    border-top:
+        1px solid #e5e7eb;
+}
+
+
+.btn {
+
+    display: inline-block;
+
+    text-decoration: none;
+
+    border: none;
+
+    border-radius: 6px;
+
+    padding: 10px 18px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.btn-primary {
+
+    background: #2563eb;
+
+    color: white;
+}
+
+
+.btn-primary:hover {
+
+    background: #1d4ed8;
+}
+
+
+.btn-secondary {
+
+    background: #e2e8f0;
+
+    color: #334155;
+}
+
+
+.btn-secondary:hover {
+
+    background: #cbd5e1;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .page-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+
+    .form-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .form-card {
+
+        padding: 18px;
+    }
+
+}
+
+</style>
+
+{% endblock %}

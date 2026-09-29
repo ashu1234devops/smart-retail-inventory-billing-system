@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ page_title }} | Smart Retail</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 20px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .header-right {
+            font-size: 14px;
+            color: #d1d5db;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 850px;
+            max-width: 92%;
+            margin: 40px auto;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            font-size: 30px;
+            color: #172033;
+        }
+
+        .page-title p {
+            margin-top: 8px;
+            color: #6b7280;
+        }
+
+        /* ================= CARD ================= */
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #172033;
+            padding-bottom: 12px;
+            margin-bottom: 22px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.10);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .help-text {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* ================= ERRORS ================= */
+
+        .error-box {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .field-error {
+            color: #dc2626;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 11px 22px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-secondary:hover {
+            background: #d1d5db;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .header {
+                padding: 18px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div class="logo">
+            🏪 SMART RETAIL
+        </div>
+
+        <div class="header-right">
+            Retail Management System
+        </div>
+
+    </div>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <div class="container">
+
+        <div class="page-title">
+
+            <h1>
+                {{ page_title }}
+            </h1>
+
+            <p>
+                Enter vendor information
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="section-title">
+                Vendor Information
+            </div>
+
+
+            <!-- FORM ERRORS -->
+
+            {% if form.non_field_errors %}
+
+                <div class="error-box">
+
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <div class="form-grid">
+
+                    <!-- VENDOR NAME -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.vendor_name.id_for_label }}">
+                            Vendor Name
+                        </label>
+
+                        {{ form.vendor_name }}
+
+                        {% if form.vendor_name.errors %}
+
+                            {% for error in form.vendor_name.errors %}
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- VENDOR EMAIL -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.vendor_email.id_for_label }}">
+                            Vendor Email
+                        </label>
+
+                        {{ form.vendor_email }}
+
+                        {% if form.vendor_email.errors %}
+
+                            {% for error in form.vendor_email.errors %}
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- VENDOR PHONE -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.vendor_phone.id_for_label }}">
+                            Vendor Phone Number
+                        </label>
+
+                        {{ form.vendor_phone }}
+
+                        {% if form.vendor_phone.errors %}
+
+                            {% for error in form.vendor_phone.errors %}
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- PAYMENT TERMS -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.payment_terms.id_for_label }}">
+                            Payment Terms
+                        </label>
+
+                        {{ form.payment_terms }}
+
+                        {% if form.payment_terms.errors %}
+
+                            {% for error in form.payment_terms.errors %}
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- VENDOR GST -->
+
+                    <div class="form-group">
+
+                        <label for="{{ form.vendor_gst.id_for_label }}">
+                            Vendor GST
+                        </label>
+
+                        {{ form.vendor_gst }}
+
+                        {% if form.vendor_gst.errors %}
+
+                            {% for error in form.vendor_gst.errors %}
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- VENDOR ADDRESS -->
+
+                    <div class="form-group full">
+
+                        <label for="{{ form.vendor_address.id_for_label }}">
+                            Vendor Address
+                        </label>
+
+                        {{ form.vendor_address }}
+
+                        {% if form.vendor_address.errors %}
+
+                            {% for error in form.vendor_address.errors %}
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="buttons">
+
+                    <a href="{% url 'vendor_list' %}"
+                       class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Save Vendor
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
